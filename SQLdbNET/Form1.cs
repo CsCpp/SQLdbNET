@@ -34,6 +34,28 @@ namespace SQLdbNET
             {
                 MessageBox.Show("ERROR", "Connection",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            textBox7.Text = "SELECT ProductName, UnitPrice FROM Products";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
+               textBox7.Text, sqlConnection
+               );
+                DataSet ds = new DataSet();
+                sqlDataAdapter.Fill(ds);
+                dataGridView1.DataSource = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Что-то пошло не так!", MessageBoxButtons.OK,MessageBoxIcon.Error);  
+            }
+           
+
+
         }
     }
 }

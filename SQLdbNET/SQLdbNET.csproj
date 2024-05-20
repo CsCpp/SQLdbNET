@@ -68,6 +68,16 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="moyaDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>moyaDBDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Nordwind.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Nordwind.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -82,6 +92,28 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="moyaDBDataSet.xsc">
+      <DependentUpon>moyaDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="moyaDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>moyaDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="moyaDBDataSet.xss">
+      <DependentUpon>moyaDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Nordwind.xsc">
+      <DependentUpon>Nordwind.xsd</DependentUpon>
+    </None>
+    <None Include="Nordwind.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Nordwind.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Nordwind.xss">
+      <DependentUpon>Nordwind.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
