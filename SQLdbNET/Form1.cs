@@ -35,6 +35,12 @@ namespace SQLdbNET
                 MessageBox.Show("ERROR", "Connection",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             textBox7.Text = "SELECT ProductName, UnitPrice FROM Products";
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT * FROM Products", sqlConnection);
+            
+            DataSet ds = new DataSet();
+            dataAdapter.Fill(ds);
+            dataGridView2.DataSource = ds.Tables[0];
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -92,6 +98,36 @@ namespace SQLdbNET
                 }
             }
 
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+            (dataGridView2.DataSource as DataTable).DefaultView.RowFilter = $"ProductName LIKE '%{textBox8.Text}%'";
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox1.SelectedIndex)
+            {
+                case 0:
+                    (dataGridView2.DataSource as DataTable).DefaultView.RowFilter = $"UnitsInStock <=10";
+                    break;
+                case 1:
+                    (dataGridView2.DataSource as DataTable).DefaultView.RowFilter = $"UnitsInStock >=10 AND UnitsInStock <=50";
+                    break;
+                case 2:
+                    (dataGridView2.DataSource as DataTable).DefaultView.RowFilter = $"UnitsInStock >50";
+                    break;
+                case 3:
+                    (dataGridView2.DataSource as DataTable).DefaultView.RowFilter = "";
+                    break;
+
+            }
         }
     }
 }
