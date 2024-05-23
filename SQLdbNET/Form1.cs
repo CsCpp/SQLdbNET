@@ -11,12 +11,14 @@ using System.Data.SqlClient;
 using System.Configuration;
 
 
+
 namespace SQLdbNET
 {
     public partial class Form1 : Form
     {
         private SqlConnection sqlConnection=null;
         private List<string[]> rows = new List<string[]>();
+        private List<string[]> filteredList =null;
 
         public Form1()
         {
@@ -169,6 +171,43 @@ namespace SQLdbNET
                     (dataGridView2.DataSource as DataTable).DefaultView.RowFilter = "";
                     break;
 
+            }
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+            filteredList = rows.Where((x) =>
+            x[0].ToLower().Contains(textBox9.Text.ToLower())).ToList();
+
+            RefreshList(filteredList);
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comboBox2.SelectedIndex)
+            {
+                case 0:
+                    filteredList = rows.Where((x) =>
+                    Double.Parse(x[2])<=10).ToList();
+                    RefreshList(filteredList);
+                    break;
+
+                case 1:
+                    filteredList = rows.Where((x) =>
+                  Double.Parse(x[2]) >10 && Double.Parse(x[2])<=100).ToList();
+                    RefreshList(filteredList);
+                    break;
+
+                case 2:
+                    filteredList = rows.Where((x) =>
+                  Double.Parse(x[2]) > 100).ToList();
+                    RefreshList(filteredList);
+                    break;
+                case 3:
+                    RefreshList(rows);
+
+                    break;
             }
         }
     }
