@@ -16,6 +16,7 @@ namespace SQLdbNET
     public partial class Form1 : Form
     {
         private SqlConnection sqlConnection=null;
+        private List<string[]> rows = new List<string[]>();
 
         public Form1()
         {
@@ -41,8 +42,52 @@ namespace SQLdbNET
             DataSet ds = new DataSet();
             dataAdapter.Fill(ds);
             dataGridView2.DataSource = ds.Tables[0];
+            //---------------------------------------  LV Filtr  ---------------------------------------
+            string[] row = null;
+            
+            SqlDataReader dataReader = null;
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand(
+                    "SELECT ProductName, QuantityPerUnit, UnitPrice FROM Products",
+                    sqlConnection);
+
+                dataReader = sqlCommand.ExecuteReader();
+          
+                while (dataReader.Read())
+                {
+                    row = new string[]
+                    {    Convert.ToString(dataReader["ProductName"]),
+                        Convert.ToString(dataReader["QuantityPerUnit"]),
+                        Convert.ToString(dataReader["UnitPrice"]),
+                    };
+                    rows.Add(row);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (dataReader != null && !dataReader.IsClosed)
+                {
+                    dataReader.Close();
+                }
+            }
+            RefreshList(rows);
         }
 
+        private void RefreshList(List<string[]> list)
+        {
+            listView2.Items.Clear();
+            foreach (string[] s in list)
+            {
+                listView2.Items.Add(new ListViewItem(s));
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -59,9 +104,6 @@ namespace SQLdbNET
 
                 MessageBox.Show(ex.Message, "Что-то пошло не так!", MessageBoxButtons.OK,MessageBoxIcon.Error);  
             }
-           
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
