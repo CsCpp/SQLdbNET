@@ -210,5 +210,29 @@ namespace SQLdbNET
                     break;
             }
         }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            textBox10.Text = "SELECT DISTINCT Products.ProductID AS 'ID', Products.ProductName as 'Название продукта',\r\nProducts.UnitPrice as 'Цена', [Order Details].UnitPrice as 'Цена заказа'\r\nFROM Products, [Order Details]\r\nWHERE [Order Details].UnitPrice >50 AND [Order Details].ProductID=Products.ProductID;";
+            try
+            {
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
+               textBox10.Text, sqlConnection
+               );
+                DataSet ds = new DataSet();
+                sqlDataAdapter.Fill(ds);
+                dataGridView1.DataSource = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Что-то пошло не так!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
