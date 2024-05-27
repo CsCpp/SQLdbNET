@@ -90,24 +90,7 @@ namespace SQLdbNET
                 listView2.Items.Add(new ListViewItem(s));
             }
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
-               textBox7.Text, sqlConnection
-               );
-                DataSet ds = new DataSet();
-                sqlDataAdapter.Fill(ds);
-                dataGridView1.DataSource = ds.Tables[0];
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message, "Что-то пошло не так!", MessageBoxButtons.OK,MessageBoxIcon.Error);  
-            }
-        }
-
+   
         private void button2_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
@@ -211,18 +194,40 @@ namespace SQLdbNET
             }
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+    
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            switch (listBox1.SelectedIndex)
+            {
+                case 0:
+                    textBox7.Text = "SELECT MAX(tmp.territory) as 'Максимальное колличество территории' FROM  ( SELECT EmployeeID as id, COUNT(*) as territory FROM EmployeeTerritories GROUP BY EmployeeID HAVING COUNT(*)>1 ) tmp";
+                    selectTextBox7();
+                    break;
+                    case 1:
+                    textBox7.Text = "SELECT ProductName, QuantityPerUnit, UnitPrice FROM Products";
+                    selectTextBox7();
+                    break;
+                    case 2:
+                    textBox7.Text = "SELECT DISTINCT Products.ProductID AS 'ID', Products.ProductName as 'Название продукта', Products.UnitPrice as 'Цена', [Order Details].UnitPrice as 'Цена заказа' FROM Products, [Order Details] WHERE [Order Details].UnitPrice >50 AND [Order Details].ProductID=Products.ProductID";
+                    selectTextBox7();
+                    break;
+                    case 3:
+                    textBox7.Text = "SELECT EmployeeID as 'id', COUNT(*) as 'Количество территорий' FROM EmployeeTerritories GROUP BY EmployeeID HAVING COUNT(*)>1 ";
+                    selectTextBox7();
+                    break;  
+                default:
+                    break;
+            }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+ 
+
+        private void selectTextBox7()
         {
-            textBox10.Text = "SELECT DISTINCT Products.ProductID AS 'ID', Products.ProductName as 'Название продукта',\r\nProducts.UnitPrice as 'Цена', [Order Details].UnitPrice as 'Цена заказа'\r\nFROM Products, [Order Details]\r\nWHERE [Order Details].UnitPrice >50 AND [Order Details].ProductID=Products.ProductID;";
             try
             {
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(
-               textBox10.Text, sqlConnection
+               textBox7.Text, sqlConnection
                );
                 DataSet ds = new DataSet();
                 sqlDataAdapter.Fill(ds);

@@ -1,4 +1,8 @@
-﻿SELECT DISTINCT Products.ProductID AS 'ID', Products.ProductName as 'Название продукта',
-Products.UnitPrice as 'Цена', [Order Details].UnitPrice as 'Цена заказа'
-FROM Products, [Order Details]
-WHERE [Order Details].UnitPrice >50 AND [Order Details].ProductID=Products.ProductID;
+﻿SELECT MAX(tmp.territory) as 'Максимальное колличество территории'
+FROM 
+(
+SELECT EmployeeID as id, COUNT(*) as territory
+FROM EmployeeTerritories
+GROUP BY EmployeeID
+HAVING COUNT(*)>1
+) tmp
