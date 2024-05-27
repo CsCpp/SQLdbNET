@@ -37,7 +37,7 @@ namespace SQLdbNET
             {
                 MessageBox.Show("ERROR", "Connection",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            textBox7.Text = "SELECT ProductName, UnitPrice FROM Products";
+           
 
             SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT * FROM Products", sqlConnection);
             
